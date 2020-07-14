@@ -18,24 +18,24 @@ if(isset($_POST['page'])){
         	break;
         case "block":
         	blocked();
-	break;
-		default:
-			echo "404 - Page not found!";
-			break;
+        	break;
+	default:
+		echo "404 - Page not found!";
+		break;
 		
 	}
 }
 
 //Simple page functions..
 function openvpn(){
-	include('app/openvpn.php');
+	include('pages/openvpn.php');
 }
 function blocked()
 {
-	include('app/block.php');
+	include('pages/block.php');
 }
 function logs()
 {
-	include('app/logs.php');
+	include('pages/logs.php');
 }
 ?>
