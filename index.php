@@ -2,7 +2,7 @@
 session_start();
 include("app/auth.php");
 //Always push out header...
-
+define("UI", true);
 head();
 
 //Check for login or dashboard...
@@ -153,8 +153,8 @@ function body(){
       				<li>&nbsp;</li>
       				<li>&nbsp;</li>
       				<li><a href="#" onclick="pageLoad('PiVPN');"><i class="fa fa-lock fa-fw"></i> PiVPN Profiles</a></li>
-      				<li>&nbsp;</li>
-      				<li>&nbsp;</li>
+      				<li><a href="#" onclick="pageLoad('block');">Blocking</a></li>
+      				<li><a href="#" onclick="pageLoad('logs');">Logs</a></li>
                     <li class="dropdown">
         				<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-power-off fa-fw"></i> Power Options</a>
         				<ul class="dropdown-menu">
