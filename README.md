@@ -5,7 +5,7 @@
 **Based on [PiVPN GUI](https://github.com/AnnonZerp/pivpn-gui)
 
 ### How to install
-```sudo apt-get update && sudo apt-get install git apache2 php libapache2-mod-php expect geoip-bin build-essentials gcc```
+```sudo apt update && sudo apt install git apache2 php libapache2-mod-php expect geoip-bin build-essentials gcc```
 	
 Edit the User and Group to the user/group (CURRENT_USERNAME)
 ```
@@ -23,5 +23,8 @@ cd html/app/bin
 sudo ./compile_pam.sh
 sudo service apache2 restart
 ```
+
+Features by: REDD
+UI Theme by: AtomicWolf & REDD
 
 This Project is based off Autoinstall Script of OpenVPN from [pivpn.io](http://pivpn.io).
