@@ -5,9 +5,15 @@ if(!isset($_SESSION['username'])){
 }
 if(isset($_POST['page'])){
 	switch($_POST['page']){
-		case "PiVPN":
-			openvpn();
-			break;
+        case "logs":
+        	logs();
+        	break;
+        case "PiVPN":
+        	openvpn();
+        	break;
+        case "block":
+        	blocked();
+	break;
 		default:
 			echo "404 - Page not found!";
 			break;
@@ -18,5 +24,13 @@ if(isset($_POST['page'])){
 //Simple page functions..
 function openvpn(){
 	include('pages/openvpn.php');
+}
+function blocked()
+{
+	include('pages/block.php');
+}
+function logs()
+{
+	include('pages/logs.php');
 }
 ?>
