@@ -98,11 +98,6 @@ function bodyLogin(){
                 <a class="navbar-brand" href="./"><?php echo exec("hostname"); ?> - PiVPN</a>
             </div>
         </nav>
-        <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="./">Powered by OpenRSD</a>
-            </div>
-        </nav>
         <div class="container">
         	<div class="row">
         		<form class="form-signin" method="POST" action="index.php">
@@ -180,11 +175,6 @@ function body(){
     			</div>
   			</div>
 		</nav>
-		<nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="./">Powered by OpenRSD</a>
-            </div>
-        </nav>
 		<div class="container">
 			<div id="pageContent"  role="main">
 				Please select an item from the menu.
@@ -244,7 +234,7 @@ function footer(){
   			$(document).ready(ajustamodal);
   			$(window).resize(ajustamodal);
   			function ajustamodal() {
-    			var altura = $(window).height() - 160; //value corresponding to the modal heading + footer
+    			var altura = $(window).height(); //value corresponding to the modal heading + footer
     			$(".ativa-scroll").css({"height":altura,"overflow-y":"auto"});
   			}
 		</script>
