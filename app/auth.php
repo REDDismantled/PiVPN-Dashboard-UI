@@ -23,7 +23,7 @@ function auth($username, $password){
     		file_put_contents("app/auth_log/$date2.log","$date [AUTH] - Authentication for $username failed!($ip) \n", FILE_APPEND);
     		return false;
     }
-	$result = exec("sudo ./app/bin/chkpasswd $username $password");
+	$result = exec("sudo ./app/bin/pam $username $password");
 	if($result == "Not Authenticated"){
 		file_put_contents("app/auth_log/$date2.log","$date [AUTH] - Authentication for $username failed!($ip) \n", FILE_APPEND);
 		return false;
