@@ -19,7 +19,7 @@ sudo apt install build-essential
 cd /var/www
 sudo git clone https://github.com/REDDismantled/PiVPN-Dashboard-UI html
 sudo chown $USER:$USER html
-cd app/bin
+cd html/app/bin
 sudo ./compile_pam.sh
 sudo service apache2 restart
 ```
