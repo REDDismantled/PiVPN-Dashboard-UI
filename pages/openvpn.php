@@ -43,6 +43,18 @@ if (!isset($_SESSION['username'])) {
     			</thead>
 			</table><br>
 			<pre><?php echo shell_exec("sudo pivpn -c ^| tail -n +5 "); ?></pre>
+	<?php	
+		$lines = file('/opt/pivpn/openvpn/clients.txt');
+		foreach ($lines as $line) {
+    			if ( $line == PHP_EOL ) { continue; } // avoid blank lines causing issues
+    			$columns = explode(' ', $line);
+    			echo '<tr>' . PHP_EOL;
+    			foreach( $columns as $col ) {  
+        			echo '<td>' . trim($col) . '</td>';
+    			}
+    		echo PHP_EOL . '</tr>' . PHP_EOL;
+	}
+	?>
 	    </div>
 	<div class="col-lg-6">
 		<table class="table">
