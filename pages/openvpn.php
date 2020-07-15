@@ -43,29 +43,7 @@ if (!isset($_SESSION['username'])) {
     			</thead>
 			</table><br>
 			<pre><?php echo shell_exec("sudo pivpn -c ^| tail -n +5 "); ?></pre>
-		    </div>
-		<table class="table" align="center"width="100%">
-				<tr>
-					<th width="16.5%">Name</th>
-					<th width="16.5%">Remote</th>
-					<th width="16.5%">Virtual</th>
-					<th width="16.5%">Received</th>
-					<th width="16.5%">Sent</th>
-					<th width="16.5%">Connected</th>
-				</tr>
-	<?php	
-		$lines = file('/opt/pivpn/openvpn/clients.txt ^| tail -n +2 ');
-		foreach ($lines as $line) {
-    			if ( $line == PHP_EOL ) { continue; } // avoid blank lines causing issues
-    			$columns = explode('  ', $line);
-    			echo '<tr>' . PHP_EOL;
-    			foreach( $columns as $col ) {  
-        			echo '<td width="16.5%">' . trim($col) . '</td>';
-    			}
-    		echo PHP_EOL . '</tr>' . PHP_EOL;
-	}
-	?>
-		</table>
+	    </div>
 	<div class="col-lg-6">
 		<table class="table">
     			<thead>
@@ -78,6 +56,28 @@ if (!isset($_SESSION['username'])) {
 	?>
 	</div>
     </div>
+		<table class="table" align="center"width="100%">
+				<tr>
+					<th width="16.5%">Name</th>
+					<th width="16.5%">Remote</th>
+					<th width="16.5%">Virtual</th>
+					<th width="16.5%">Received</th>
+					<th width="16.5%">Sent</th>
+					<th width="16.5%">Connected</th>
+				</tr>
+	<?php	
+		$lines = file('/opt/pivpn/openvpn/clients.txt');
+		foreach ($lines as $line) {
+    			if ( $line == PHP_EOL ) { continue; } // avoid blank lines causing issues
+    			$columns = explode('  ', $line);
+    			echo '<tr>' . PHP_EOL;
+    			foreach( $columns as $col ) {  
+        			echo '<td width="16.5%">' . trim($col) . '</td>';
+    			}
+    		echo PHP_EOL . '</tr>' . PHP_EOL;
+	}
+	?>
+</table>
     <div class="row">
 	<div class="col-lg-12">
 		
