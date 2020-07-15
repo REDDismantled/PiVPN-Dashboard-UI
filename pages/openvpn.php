@@ -43,7 +43,7 @@ if (!isset($_SESSION['username'])) {
     			</thead>
 			</table><br>
 			<pre><?php echo shell_exec("sudo pivpn -c ^| tail -n +5 "); ?></pre>
-		<table class="table" align="center"width="400px">
+		<table class="table" align="center"width="800px">
 				<tr>
 					<th width="16.5%">Name</th>
 					<th width="16.5%">Remote</th>
