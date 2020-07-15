@@ -19,10 +19,10 @@ if (isset($_POST['days']))
 if(!isset($_POST['vpn_pass'])){ die("No password provided!"); }
 if (isset($_POST['vpn_pass']))
 {
-    $days = $_POST['vpn_pass'];
+    $vpn_pass = $_POST['vpn_pass'];
 }
 $pro = $_POST['profile'];
-add_vpn_profile($pro, $days, $vpn+pass);
+add_vpn_profile($pro, $days, $vpn_pass);
 //Run selected script, but only if it exists in the scr_up folder.
 function add_vpn_profile($profile, $d, $s) {
 	
