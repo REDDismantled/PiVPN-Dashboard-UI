@@ -24,7 +24,7 @@ function add_vpn_profile($profile) {
     $cmd .= "spawn /bin/bash; ";
     // Change the unix password
     $cmd .= "send \"pivpn revoke\\r\"; ";
-    $cmd .= "expect \"Please enter the Name of the client to be revoked from the list above:\\r\"; ";
+    $cmd .= "expect \"::: Please enter the Name of the client to be revoked from the list above: \\r\"; ";
     $cmd .= "send \"$profile\\r\"; ";
     $cmd .= "expect \"Completed!\"; ";
     // Commit the command to expect & close
