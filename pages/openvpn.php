@@ -43,6 +43,7 @@ if (!isset($_SESSION['username'])) {
     			</thead>
 			</table><br>
 			<pre><?php echo shell_exec("sudo pivpn -c ^| tail -n +5 "); ?></pre>
+		<table class="table">
 	<?php	
 		$lines = file('/opt/pivpn/openvpn/clients.txt');
 		foreach ($lines as $line) {
@@ -55,6 +56,7 @@ if (!isset($_SESSION['username'])) {
     		echo PHP_EOL . '</tr>' . PHP_EOL;
 	}
 	?>
+		</table>
 	    </div>
 	<div class="col-lg-6">
 		<table class="table">
