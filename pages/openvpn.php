@@ -57,7 +57,7 @@ if (!isset($_SESSION['username'])) {
 	</div>
     </div>
 <?php 
-    $tdcount = 1; $numtd = 3; // number of cells per row 
+    $tdcount = 6; $numtd = 3; // number of cells per row 
     print "<table class=table>"; 
     $f = fopen("/opt/pivpn/openvpn/clients.txt", "r"); 
     while (!feof($f)) { 
