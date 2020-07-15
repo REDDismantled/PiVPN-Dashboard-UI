@@ -42,7 +42,7 @@ if (!isset($_SESSION['username'])) {
     				<th>OpenVPN Client List</th>
     			</thead>
 			</table><br>
-			<pre><?php echo shell_exec("sudo cat /var/log/openvpn-status.log"); ?></pre>
+			<pre><?php echo shell_exec("sudo pivpn -c ^| tail -n +6 "); ?></pre>
 	    </div>
 	<div class="col-lg-6">
 		<table class="table">
