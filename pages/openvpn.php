@@ -56,28 +56,27 @@ if (!isset($_SESSION['username'])) {
 	?>
 	</div>
     </div>
-<?php 
-    $tdcount = 6; $numtd = 3; // number of cells per row 
-    print "<table class=table>"; 
-    $f = fopen("/opt/pivpn/openvpn/clients.txt", "r"); 
-    while (!feof($f)) { 
-        $arrM = explode("  ",fgets($f)); 
-        $row = current ( $arrM ); 
-        if ($tdcount == 1) 
-            print "<tr>"; print "<td>$row </td>"; 
-        if ($tdcount == $numtd) { 
-            print "</tr>"; 
-            $tdcount = 1; 
-        } else { 
-            $tdcount++; 
-        } 
-    } 
-    if ($tdcount!= 1) { 
-        while ($tdcount <= $numtd) { 
-            print "<td>&nbsp;</td>"; $tdcount++; 
-        } print "</tr>"; 
-    } 
-    print "</table>"; 
+<?php
+$maxCols = 6;
+$counter = 0;
+
+echo "<table border='1'>";
+foreach ($arrM as $val) {
+    $newRow = ($counter++ % $maxCols == 0);
+    if ($newRow) {
+        echo "<tr>";
+    }
+    echo "<td>" . $val . "</td>";
+    if ($newRow) {
+        echo "</tr>";
+    }
+}
+// fill out the rest of the table
+$remainingCols = $maxCols - (count($arrM) % $maxCols);
+for ($i = 0; $i < $remainingCols; $i++) {
+    echo "<td>&nbsp;</td>";
+}
+echo "</table>";
 ?>
     <div class="row">
 	<div class="col-lg-12">
