@@ -382,14 +382,14 @@ function oProfile(){
 	load(true)
 	user = document.getElementById("profile_name").value;
 	days = document.getElementById("expiration_days").value;
-	pass = document.getElementById("pass").value
+	pass = document.getElementById("pass").value;
 	$.ajax({
 		method:'post',
 		url:'./app/profile.php',
 		data:{
 			profile:user,
-			days:days
-			pass:pass:
+			days:days,
+			pass:pass
 		},
 		success:function(result) {
 			load(false);
@@ -415,7 +415,7 @@ function rProfile(user){
 		success:function(result) {
 			load(false);
 			genModal("Profile revoke status (" + user + "):", '<pre style="overscroll-y:scroll; max-height:400px;">' + result + "</pre>");
-			pageLoad('openvpn');
+			pageLoad('PiVPN');
 			
 		}
 		}).fail(function(e) {
