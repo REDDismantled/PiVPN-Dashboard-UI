@@ -1,5 +1,6 @@
 <?php
-function getRam(){
+class UI {
+    public static function getRam(){
 	$total = exec("grep MemTotal /proc/meminfo | awk '{print $2}'");
 	$free = exec("grep MemFree /proc/meminfo | awk '{print $2}'");
 	$cached = shell_exec("grep Cached /proc/meminfo | awk '{print $2}'");
@@ -19,12 +20,12 @@ function getRam(){
 //	}
 	return "Total: $total<br />Used: $used <br />Free: $free";
 }
-function getCPUTemp(){
+    public static function getCPUTemp(){
 	$temp = exec("cat /sys/class/thermal/thermal_zone0/temp");
 	$temp2 = $temp / 1000;
 	echo $temp2."'C";
 }
-function getUptime(){
+    public static function getUptime(){
     $file = @fopen('/proc/uptime', 'r');
     if (!$file) return 'Opening of /proc/uptime failed!';
     $data = @fread($file, 128);
@@ -38,10 +39,10 @@ function getUptime(){
     );
     return "Uptime: ".$uptime["days"]."D ".$uptime["hours"]."H ".$uptime["minutes"]."M";
 }
-function getCurrentIP($name){
+    public static function getCurrentIP($name){
 	return exec("/sbin/ifconfig $name | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'");
 }
-function getCPU(){
+    public static function getCPU(){
 	$speed = 1;
     //Sets variable with current CPU information and then turns it into an array seperating each word.
     $prevVal = shell_exec("cat /proc/stat");
@@ -63,7 +64,7 @@ function getCPU(){
     return intval(100 * (($intervalTotal - ($idle - $prevIdle)) / $intervalTotal));
 	//return  "CPU Usage:".exec("top -b -n1 | grep \"Cpu(s)\" | awk '{print $2 + $4}'")."%";
 }
-function generateString($length = 10) {
+    public static function generateString($length = 10) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
     $randomString = '';
@@ -72,7 +73,7 @@ function generateString($length = 10) {
     }
     return $randomString;
 }
-function getUpdates(){
+    public static function getUpdates(){
 	$isThere = shell_exec("./scripts/updates.sh");
 	$number = substr_count( $isThere, PHP_EOL );
 	$number = $number - 1;
@@ -83,24 +84,24 @@ function getUpdates(){
 	}
 
 }
-function writeFileA($file, $content){
+    public static function writeFileA($file, $content){
 	$myfile = fopen($file, "a") or die("Unable to open file!");
 	fwrite($myfile, $content."\n");
 	fclose($myfile);
 	return true;
 }
 
-function writeFileC($file, $content){
+    public static function writeFileC($file, $content){
 	$myfile = fopen($file, "w") or die("Unable to open file!");
 	fwrite($myfile, $content) or die(false);
 	fclose($myfile);
 	return true;
 }
-function readFileAll($file){
+    public static function readFileAll($file){
 	$fileContent = file_get_contents($file);
 	return $fileContent;
 }
-function getDirContents($dir, &$results = array()){
+    public static function getDirContents($dir, &$results = array()){
     $files = scandir($dir);
 
     foreach($files as $key => $value){
@@ -121,5 +122,6 @@ function getDirContents($dir, &$results = array()){
     }
 
     return $results;
+}
 }
 ?>
