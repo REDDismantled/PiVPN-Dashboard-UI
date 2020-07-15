@@ -51,7 +51,7 @@ if (!isset($_SESSION['username'])) {
     			</thead>
 		</table>
 	<?php
-	$profile_stats = shell_exec("pivpn list");
+	$profile_stats = shell_exec("pivpn list ^| tail -n +6 ");
 	echo "<pre>".$profile_stats."</pre>";
 	?>
 	</div>
