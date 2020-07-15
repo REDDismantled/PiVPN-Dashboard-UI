@@ -17,32 +17,47 @@ define("BASEURI", dirname($_SERVER['SCRIPT_NAME'])."/");
 head();
 
 //Check for login or dashboard...
-if(isset($_POST['username']) && isset($_POST['password'])){
-	//Attempt to login...
-	if(file_exists("app/blocked_ip/".$_SERVER['REMOTE_ADDR'])){
-		$_SESSION['loginError'] = "Too many login attempts, please contact the system administrator.";
-	} else {
-		$u = $_POST['username'];
-		$p = $_POST['password'];
-		if(auth($u, $p)){
-			$_SESSION['username'] = $u;
-			$_SESSION['q'] = $p;
-		} else {
-			if(!isset($_SESSION['attempts'])){
-				$_SESSION['attempts'] = 0;
-			} 
-			$_SESSION['attempts'] = $_SESSION['attempts']  + 1;
-			$_SESSION['loginError'] = "Username or password is incorrect.";
-			if($_SESSION['attempts'] >= 5){
-				file_put_contents("app/blocked_ip/".$_SERVER['REMOTE_ADDR'],"");
-				$_SESSION['loginError'] = "Too many login attempts, please contact the system administrator.";
-			}
-		}	
-	}
+if (isset($_POST['username']) && isset($_POST['password'])) {
+    //Attempt to login...
+//    Event::handle('LoginStart',array($_SESSION,&$_POST));
+    if (file_exists("app/blocked_ip/".$_SERVER['REMOTE_ADDR'])) {
+        $_SESSION['loginError'] = "Too many login attempts, please contact the system administrator.";
+//        Event::handle('LoginError',array($_SESSION,&$_POST));
+    } else {
+        $u = $_POST['username'];
+        $p = $_POST['password'];
+        if (auth($u, $p)) {
+            // Always regenerate a session ID (SID) when elevating privileges
+            session_regenerate_id(true);
+            $_SESSION['username'] = $u;
+            $_SESSION['q'] = $p;
+//            Event::handle('LoginSuccess',array($_SESSION,&$_POST));
+        } else {
+            // Always regenerate a session ID (SID) when elevating privileges
+            session_regenerate_id(true);
+            if (!isset($_SESSION['attempts'])) {
+                $_SESSION['attempts'] = 0;
+            }
+            $_SESSION['attempts'] = $_SESSION['attempts']  + 1;
+            $_SESSION['loginError'] = "Username or password is incorrect.";
+ //           Event::handle('LoginError',array($_SESSION,&$_POST));
+            if ($_SESSION['attempts'] >= 5) {
+                file_put_contents("app/blocked_ip/".$_SERVER['REMOTE_ADDR'], "");
+                $_SESSION['loginError'] = "Too many login attempts, please contact the system administrator.";
+  //              Event::handle('LoginError',array($_SESSION,&$_POST));
+            }
+        }
+    }
+//    Event::handle('LoginEnd',array($_SESSION,&$_POST));
 }
+
 
 if(!isset($_SESSION['username'])){
 	//Load login
+	session_unset();
+    	session_destroy();
+    	session_start();
+    	session_regenerate_id(true);
 	bodyLogin();
 } else {
 	body();
