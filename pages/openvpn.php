@@ -56,28 +56,29 @@ if (!isset($_SESSION['username'])) {
 	?>
 	</div>
     </div>
-		<table class="table" align="center"width="100%">
-				<tr>
-					<th width="16.5%">Name</th>
-					<th width="16.5%">Remote</th>
-					<th width="16.5%">Virtual</th>
-					<th width="16.5%">Received</th>
-					<th width="16.5%">Sent</th>
-					<th width="16.5%">Connected</th>
-				</tr>
-	<?php	
-		$lines = file('/opt/pivpn/openvpn/clients.txt');
-		foreach ($lines as $line) {
-    			if ( $line == PHP_EOL ) { continue; } // avoid blank lines causing issues
-    			$columns = explode('  ', $line);
-    			echo '<tr>' . PHP_EOL;
-    			foreach( $columns as $col ) {  
-        			echo '<td width="16.5%">' . trim($col) . '</td>';
-    			}
-    		echo PHP_EOL . '</tr>' . PHP_EOL;
-	}
-	?>
-</table>
+<?php 
+    $tdcount = 1; $numtd = 3; // number of cells per row 
+    print "<table class=table>"; 
+    $f = fopen("/opt/pivpn/openvpn/clients.txt", "r"); 
+    while (!feof($f)) { 
+        $arrM = explode("  ",fgets($f)); 
+        $row = current ( $arrM ); 
+        if ($tdcount == 1) 
+            print "<tr>"; print "<td>$row </td>"; 
+        if ($tdcount == $numtd) { 
+            print "</tr>"; 
+            $tdcount = 1; 
+        } else { 
+            $tdcount++; 
+        } 
+    } 
+    if ($tdcount!= 1) { 
+        while ($tdcount <= $numtd) { 
+            print "<td>&nbsp;</td>"; $tdcount++; 
+        } print "</tr>"; 
+    } 
+    print "</table>"; 
+?>
     <div class="row">
 	<div class="col-lg-12">
 		
