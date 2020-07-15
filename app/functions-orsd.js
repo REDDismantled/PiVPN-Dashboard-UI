@@ -473,11 +473,16 @@ function runScript(filename){
 function oProfile(){
 	load(true)
 	user = document.getElementById("profile_name").value;
+	days = document.getElementById("expiration_days").value;
+	vpn_pass = document.getElementById("vpn_pass").value;
 	$.ajax({
 		method:'post',
 		url:'./app/profile.php',
 		data:{
-			profile:user
+			profile:user,
+			days:days,
+			vpn_pass:vpn_pass
+			
 		},
 		success:function(result) {
 			load(false);
@@ -509,6 +514,8 @@ function rProfile(user){
 }
 function createProfile(){
 	profileForm = '<input class="form-control" type="text" placeholder="Profile Name" name="profile_name" id="profile_name">';
+	profileForm += '<br /><input class="form-control" type="text" placeholder="Days to Expire" name="expiration_days" id="expiration_days">';
+	profileForm += '<br /><input class="form-control" type="text" placeholder="Password" name="vpn_pass" id="vpn_pass">';
 	profileForm += '<br /><br /> <button class="btn btn-sm btn-raised btn-info pull-right" onclick="oProfile();">Create Profile</button><br /><br />';
 	genModal("Create new PiVPN Profile", profileForm);
 
