@@ -11,7 +11,7 @@ if (isset($_POST['days']))
 {
     $days = $_POST['days'];
 }
-$pass = defaultpassword; // Days is set with a default prompt value.
+if(!isset($_POST['pass'])){ die("No password provided!"); }
 if (isset($_POST['pass']))
 {
     $days = $_POST['pass'];
