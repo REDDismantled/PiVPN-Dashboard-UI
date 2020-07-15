@@ -31,7 +31,6 @@ function delUser(username){
     			$("#delUserModal").modal('show');
 }
 function addUser(){
-	
 	var username = document.getElementById("newUser1").value;
 	var password = document.getElementById("newPasswd1").value;
 	var password2 = document.getElementById("newPasswd2").value;
@@ -148,42 +147,134 @@ function capitalizeFirstLetter(string) {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 }
 function apt_update(){
-	load(true);
-	document.getElementById("pageContent").innerHTML = "Fetching updates, this may take some time, please wait....";
-	$.ajax({
-		method:'post',
-		url:'./app/packages.php',
-		data:{
-			type:'update'
-		},
-		success:function(result) {
-			document.getElementById("pageContent").innerHTML = result;
-			load(false);
-		}
-		}).fail(function(e) {
-			document.getElementById("pageContent").innerHTML = "Loading the page failed. Please try again.";
-			load(false);
-		});
+    $('#pageContent > div.row > div.col-lg-12 > h1 > small > button.btn.btn-raised.btn-info').removeClass('btn-info').addClass('btn-outline-info disabled');
+    $('#pageContent > div.row > div.col-lg-12 > h1 > small > button.btn.btn-raised.btn-warning').removeClass('btn-warning').addClass('btn-outline-warning disabled');
+    $('#pageContent > div.row > div.col-lg-12 > table.table').hide();
+    var contentrow = document.createElement('div'),
+        contentcol = document.createElement('div'),
+        contentpre = document.createElement('textarea');
+    var winheight = $( window ).height(),
+        navheight = $('nav.navbar.navbar-default').outerHeight(),
+        footnavheight = $('nav.navbar.navbar-inverse.navbar-fixed-bottom').outerHeight(),
+        navheadheight = $('#pageContent > div > div > h1.page-header').outerHeight() + 30,
+        viscontheight = ( winheight - (navheight + footnavheight + navheadheight) - 180 );
+        contentpre.setAttribute('id', 'updatestreamcnt');
+        contentpre.setAttribute('rows', '1');
+        contentpre.setAttribute('cols', '160');
+        contentpre.setAttribute('readonly', true);
+        contentpre.style.maxHeight = viscontheight + 'px';
+        contentpre.style.height = viscontheight + 'px';
+        contentrow.className = 'row';
+        contentcol.className = 'col-lg-12';
+        contentcol.appendChild(contentpre);
+        contentrow.appendChild(contentcol);
+        $('#pageContent').append(contentrow);
+    var pkgbutton = document.createElement('button');
+        pkgbutton.setAttribute('onClick','pageLoad(\'packages\');');
+        pkgbutton.innerHTML = 'reload Package Updates';
+        pkgbutton.className = 'btn btn-raised btn-success';
+    var lastResponseLength = false;
+    var ajaxRequest = $.ajax({
+        type: 'post',
+        url: './app/packages.php',
+        data:{
+            type:'updatestream'
+        },
+        xhrFields: {
+            onprogress: function(e)
+            {
+                var progressResponse;
+                var response = e.currentTarget.response;
+                if(lastResponseLength === false)
+                {
+                    progressResponse = response;
+                    lastResponseLength = response.length;
+                }
+                else
+                {
+                    progressResponse = response.substring(lastResponseLength);
+                    lastResponseLength = response.length;
+                }
+                $('#updatestreamcnt').val( $('#updatestreamcnt').val() + progressResponse);
+                contentpre.scrollTop = contentpre.scrollHeight;
+            }
+        }
+    });
+    ajaxRequest.done(function(data)
+    {
+        $('#updatestreamcnt').after(pkgbutton);
+        console.log('Response Complete');
+    });
+    ajaxRequest.fail(function(error){
+        $('#updatestreamcnt').after(pkgbutton);
+        console.log('Error: ', error);
+    });
+    console.log('Request Sent');
 }
-   		
 function apt_upgrade(){
-	load(true);
-	document.getElementById("pageContent").innerHTML = "Installing upgrades... Any errors will be output to the page. This will take some time, please wait...";
-	$.ajax({
-		method:'post',
-		url:'./app/packages.php',
-		data:{
-			type:'upgrade'
-		},
-		success:function(result) {
-			document.getElementById("pageContent").innerHTML = result;
-			load(false);
-		}
-		}).fail(function(e) {
-			document.getElementById("pageContent").innerHTML = "Due to the timeout configured on the server, or your browser, this request timed out. The upgrade is still running on the server though. SSH to check upgrade status is recommended.";
-			genModal("Error", "Due to the timeout configured on the server, or your browser, this request timed out. The upgrade is still running on the server though. SSH to check upgrade status is recommended.");
-			load(false);		
-		});
+    $('#pageContent > div.row > div.col-lg-12 > h1 > small > button.btn.btn-raised.btn-info').removeClass('btn-info').addClass('btn-outline-info disabled');
+    $('#pageContent > div.row > div.col-lg-12 > h1 > small > button.btn.btn-raised.btn-warning').removeClass('btn-warning').addClass('btn-outline-warning disabled');
+    $('#pageContent > div.row > div.col-lg-12 > table.table').hide();
+    var contentrow = document.createElement('div'),
+        contentcol = document.createElement('div'),
+        contentpre = document.createElement('textarea');
+    var winheight = $( window ).height(),
+        navheight = $('nav.navbar.navbar-default').outerHeight(),
+        footnavheight = $('nav.navbar.navbar-inverse.navbar-fixed-bottom').outerHeight(),
+        navheadheight = $('#pageContent > div > div > h1.page-header').outerHeight() + 30,
+        viscontheight = ( winheight - (navheight + footnavheight + navheadheight) - 180 );
+        contentpre.setAttribute('id', 'upgradestreamcnt');
+        contentpre.setAttribute('rows', '1');
+        contentpre.setAttribute('cols', '160');
+        contentpre.setAttribute('readonly', true);
+        contentpre.style.maxHeight = viscontheight + 'px';
+        contentpre.style.height = viscontheight + 'px';
+        contentrow.className = 'row';
+        contentcol.className = 'col-lg-12';
+        contentcol.appendChild(contentpre);
+        contentrow.appendChild(contentcol);
+        $('#pageContent').append(contentrow);
+    var pkgbutton = document.createElement('button');
+        pkgbutton.setAttribute('onClick','pageLoad(\'packages\');');
+        pkgbutton.innerHTML = 'reload Package Updates';
+        pkgbutton.className = 'btn btn-raised btn-success';
+    var lastResponseLength = false;
+    var ajaxRequest = $.ajax({
+        type: 'post',
+        url: './app/packages.php',
+        data:{
+            type:'upgradestream'
+        },
+        xhrFields: {
+            onprogress: function(e)
+            {
+                var progressResponse;
+                var response = e.currentTarget.response;
+                if(lastResponseLength === false)
+                {
+                    progressResponse = response;
+                    lastResponseLength = response.length;
+                }
+                else
+                {
+                    progressResponse = response.substring(lastResponseLength);
+                    lastResponseLength = response.length;
+                }
+                $('#upgradestreamcnt').val( $('#upgradestreamcnt').val() + progressResponse);
+                contentpre.scrollTop = contentpre.scrollHeight;
+            }
+        }
+    });
+    ajaxRequest.done(function(data)
+    {
+        $('#upgradestreamcnt').after(pkgbutton);
+        console.log('Response Complete');
+    });
+    ajaxRequest.fail(function(error){
+        $('#upgradestreamcnt').after(pkgbutton);
+        console.log('Error: ', error);
+    });
+    console.log('Request Sent');
 }
 function serviceAction(name, type){
 	load(true);
@@ -201,7 +292,7 @@ function serviceAction(name, type){
 		}
 		}).fail(function(e) {
 			genModal("Error", "Due to the timeout configured on the server, or your browser, this request timed out. The command is still running on the server though. SSH to check upgrade status is recommended.");
-			load(false);		
+			load(false);
 		});
 }
 function configSave(){
@@ -252,7 +343,6 @@ function smbGet(option){
 }
 function arrayToTable(tableData) {
 	console.info(tableData);
-	
     var table = $('<table class="table"></table>');
     $(tableData).each(function (i, rowData) {
         var row = $('<tr></tr>');
@@ -279,6 +369,12 @@ function power(type){
 			document.getElementById("pageContent").innerHTML = "Seems I cannot contact the RPi - It may be shutdown, rebooting, or halted.";
 			genModal("Error?", "Seems I cannot contact the RPi - It may be shutdown, rebooting, or halted.");
 		});
+}
+function status(pageStatus){
+	//document.getElementById(pageStatus).innerHTML = "Loading...";
+	$.post("./app/post.php", {div: pageStatus}, function(result){
+		document.getElementById(pageStatus).innerHTML = result;
+	});
 }
 function startUpload(){
 	document.getElementById('uploadProcess').style.visibility = 'visible';
@@ -321,7 +417,6 @@ function cronDelete(name, type3){
 			load(false);
 			genModal("Results", "<pre>" + result + "</pre>");
 			pageLoad('cron');
-			
 		}
 		}).fail(function(e) {
 			load(false);
@@ -369,40 +464,30 @@ function runScript(filename){
 		success:function(result) {
 			load(false);
 			genModal("Script \"" + filename + "\" run results:", "<pre>" + result + "</pre>");
-			
 		}
 		}).fail(function(e) {
 			load(false);
 			genModal("Error", e);
 		});
-	
-	
 }
 function oProfile(){
 	load(true)
 	user = document.getElementById("profile_name").value;
-	days = document.getElementById("expiration_days").value;
-	pass = document.getElementById("pass").value;
 	$.ajax({
 		method:'post',
 		url:'./app/profile.php',
 		data:{
-			profile:user,
-			days:days,
-			pass:pass
+			profile:user
 		},
 		success:function(result) {
 			load(false);
 			genModal("Profile creation status (" + user + "):", '<pre style="overscroll-y:scroll; max-height:400px;">' + result + "</pre>");
 			pageLoad('PiVPN');
-			
 		}
 		}).fail(function(e) {
 			load(false);
 			genModal("Error", e);
 		});
-	
-	
 }
 function rProfile(user){
 	load(true)
@@ -416,21 +501,15 @@ function rProfile(user){
 			load(false);
 			genModal("Profile revoke status (" + user + "):", '<pre style="overscroll-y:scroll; max-height:400px;">' + result + "</pre>");
 			pageLoad('PiVPN');
-			
 		}
 		}).fail(function(e) {
 			load(false);
 			genModal("Error", e);
 		});
-	
-	
 }
 function createProfile(){
 	profileForm = '<input class="form-control" type="text" placeholder="Profile Name" name="profile_name" id="profile_name">';
-	profileForm += '<br /><input class="form-control" type="text" placeholder="Expiration Days" name="expiration_days" id="expiration_days">';
-	profileForm += '<br /><input class="form-control" type="text" placeholder="Password" name="pass" id="pass">';
-	profileForm += '<br /><br /> <button class="btn btn-sm btn-raised btn-info pull-right" type="button" onclick="oProfile();">Create Profile</button><br /><br />';
-
+	profileForm += '<br /><br /> <button class="btn btn-sm btn-raised btn-info pull-right" onclick="oProfile();">Create Profile</button><br /><br />';
 	genModal("Create new PiVPN Profile", profileForm);
 
 }
@@ -445,14 +524,11 @@ function displayLog(filename){
 		success:function(result) {
 			load(false);
 			genModal("Log \"" + filename + "\" content:", "<pre class=\"ativa-scroll\">" + result + "</pre>");
-			
 		}
 		}).fail(function(e) {
 			load(false);
 			genModal("Error", e);
 		});
-	
-	
 }
 function displayProfile(filename){
 	load(true)
@@ -465,14 +541,11 @@ function displayProfile(filename){
 		success:function(result) {
 			load(false);
 			genModal("OpenVPN Profile \"" + filename + "\" content:<br><small>Copy and paste into an OVPN file to use</small>", "<pre class=\"ativa-scroll\">" + result + "</pre>");
-			
 		}
 		}).fail(function(e) {
 			load(false);
 			genModal("Error", e);
 		});
-	
-	
 }
 function delScript(filename){
 	load(true)
@@ -487,7 +560,6 @@ function delScript(filename){
 			load(false);
 			genModal("Results", "<pre>" + result + "</pre>");
 			pageLoad('apps');
-			
 		}
 		}).fail(function(e) {
 			load(false);
@@ -511,7 +583,6 @@ function unblock(ip){
 				genModal("Results", "<pre>" + result + "</pre>");
 				pageLoad('block');
 			}
-			
 		}
 		}).fail(function(e) {
 			load(false);
@@ -526,4 +597,9 @@ function IsJsonString(str) {
         return false;
     }
     return true;
+}
+
+function resize_frame(){
+    var window_height = ( $(document).height() * 7 / 10 );
+    $('#shellinaboxdiv').css('height',window_height+'px');
 }
