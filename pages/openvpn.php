@@ -48,12 +48,12 @@ if (!isset($_SESSION['username'])) {
 				<col span="6">
 			</colgroup>
 				<tr>
-					<td class="text-align:center;">Name</td>
-					<td class="text-align:center;">Remote</td>
-					<td class="text-align:center;">Virtual</td>
-					<td class="text-align:center;">Received</td>
-					<td class="text-align:center;">Sent</td>
-					<td class="text-align:center;">Connected</td>
+					<th class="text-align:center;">Name</th>
+					<th class="text-align:center;">Remote</th>
+					<th class="text-align:center;">Virtual</th>
+					<th class="text-align:center;">Received</th>
+					<th class="text-align:center;">Sent</th>
+					<th class="text-align:center;">Connected</th>
 				</tr>
 	<?php	
 		$lines = file('/opt/pivpn/openvpn/clients.txt');
