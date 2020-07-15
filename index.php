@@ -1,8 +1,19 @@
 <?php
-session_start();
+//Basic Dbug
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+//error_reporting(E_ALL);
+//Show errors except for notices and warnings
+ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
+ini_set('max_execution_time',300);
+if (!isset($_SESSION)) {
+    session_start();
+};
 include("app/auth.php");
+
 //Always push out header...
 define("UI", true);
+define("BASEURI", dirname($_SERVER['SCRIPT_NAME'])."/");
 head();
 
 //Check for login or dashboard...
