@@ -13,6 +13,7 @@ include("app/auth.php");
 
 //Always push out header...
 define("UI", true);
+require_once(__DIR__."/Events.php"); //Event system
 define("BASEURI", dirname($_SERVER['SCRIPT_NAME'])."/");
 head();
 
