@@ -17,8 +17,9 @@ if (!isset($_SESSION)) {
 if(!isset($_SESSION['username'])){
 	die("You must be logged in to view this page!");
 }
-if(isset($_POST['page'])){
-	switch($_POST['page']){
+if (isset($_POST['page'])) {
+		Event::handle('PageLoad',array($_SESSION,&$_POST));
+        switch ($_POST['page']) {
         case "logs":
         	logs();
         	break;
