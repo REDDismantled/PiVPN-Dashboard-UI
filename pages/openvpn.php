@@ -1,7 +1,6 @@
 <?php if (!defined("UI")) {
     die();
 }
-die();
 //Check for valid session:
 if (!isset($_SESSION)) {
     session_start();
