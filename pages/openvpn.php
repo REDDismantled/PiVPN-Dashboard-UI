@@ -44,7 +44,7 @@ if (!isset($_SESSION['username'])) {
 			</table><br>
 			<pre><?php echo shell_exec("sudo pivpn -c ^| tail -n +5 "); ?></pre>
 		<table class="table" width="95%">
-			<tr>
+			<colgroup>
 				<center>
 					<td class="text-align:center;">Name</td>
 					<td class="text-align:center;">Remote</td>
@@ -53,7 +53,7 @@ if (!isset($_SESSION['username'])) {
 					<td class="text-align:center;">Sent</td>
 					<td class="text-align:center;">Connected</td>
 				</center>
-			</tr>
+			</colgroup>
 	<?php	
 		$lines = file('/opt/pivpn/openvpn/clients.txt');
 		foreach ($lines as $line) {
