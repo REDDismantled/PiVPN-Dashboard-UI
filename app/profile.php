@@ -1,6 +1,11 @@
-<?php
+<?php if (!defined("UI")) {
+    die();
+}
+die();
 //Check for valid session:
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+};
 include('app/functions.php');
 if(!isset($_SESSION['username'])){
 	die("You must be logged in to view this page!");
@@ -11,13 +16,13 @@ if (isset($_POST['days']))
 {
     $days = $_POST['days'];
 }
-if(!isset($_POST['pass'])){ die("No password provided!"); }
-if (isset($_POST['pass']))
+if(!isset($_POST['vpn_pass'])){ die("No password provided!"); }
+if (isset($_POST['vpn_pass']))
 {
-    $days = $_POST['pass'];
+    $days = $_POST['vpn_pass'];
 }
 $pro = $_POST['profile'];
-add_vpn_profile($pro, $days, $pass);
+add_vpn_profile($pro, $days, $vpn+pass);
 //Run selected script, but only if it exists in the scr_up folder.
 function add_vpn_profile($profile, $d, $s) {
 	
@@ -39,7 +44,7 @@ function add_vpn_profile($profile, $d, $s) {
     $cmd .= "expect \"Enter the password for the client:   \"; ";
     $cmd .= "send \"$pass\\r\"; ";
     $cmd .= "expect \"Enter the password again to verify:   \"; ";
-    $cmd .= "send \"$pass\\r\"; ";
+    $cmd .= "send \"$vpn_pass\\r\"; ";
     $cmd .= "expect \"for easy transfer.\"; ";
     // Commit the command to expect & close
     fwrite($p, $cmd); pclose ($p);
