@@ -25,11 +25,11 @@ if (!isset($_SESSION['username'])) {
     			</thead>
     			<tbody>
     				<?php
-                    $log_files = OpenRSD::getDirContents('/var/log');
+                    $log_files = UI::getDirContents('/var/log');
                     foreach ($log_files as $log) {
                         echo'<tr><td><a href="#" onClick="displayLog(\''.$log.'\')">'.$log.'</a></td></tr>';
                     }
-                    $log_files = OpenRSD::getDirContents('app/auth_log');
+                    $log_files = UI::getDirContents('app/auth_log');
                     foreach ($log_files as $log) {
                         echo'<tr><td><a href="#" onClick="displayLog(\''.$log.'\')">'.$log.'</a></td></tr>';
                     }
