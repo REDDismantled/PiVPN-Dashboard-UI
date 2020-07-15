@@ -51,7 +51,7 @@ if (!isset($_SESSION['username'])) {
     			$columns = explode('  ', $line);
     			echo '<tr>' . PHP_EOL;
     			foreach( $columns as $col ) {  
-        			echo '<td>' . trim($col) . '</td>';
+        			echo '<td width="16.5%">' . trim($col) . '</td>';
     			}
     		echo PHP_EOL . '</tr>' . PHP_EOL;
 	}
