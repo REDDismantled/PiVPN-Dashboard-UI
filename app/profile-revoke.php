@@ -16,7 +16,7 @@ function add_vpn_profile($profile) {
     // Open a handle to expect in write mode
     $p = popen('sudo /usr/bin/expect','w');
     $profile_short = $_POST['profile'];
-    $profile_short = str_replace("/home/pi/ovpns/","", $pro);
+    $profile_short = str_replace("/home/vpn/ovpns/","", $pro);
     $profile_short = str_replace(".ovpn","", $pro);
 
     // Log conversation for verification
@@ -27,7 +27,7 @@ function add_vpn_profile($profile) {
     $cmd .= "spawn /bin/bash; ";
     // Change the unix password
     $cmd .= "send \"pivpn revoke\\r\"; ";
-    $cmd .= "expect \"::: Please enter the Name of the client to be revoked from the list above: \\r\"; ";
+    $cmd .= "expect \"::: Please enter the Name of the client to be revoked from the list above: \"; ";
     $cmd .= "send \"$profile_short\\r\"; ";
     $cmd .= "expect \"Completed!\"; ";
     // Commit the command to expect & close
