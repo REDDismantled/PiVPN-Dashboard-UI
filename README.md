@@ -5,7 +5,7 @@
 **Based on [PiVPN GUI](https://github.com/AnnonZerp/pivpn-gui)
 
 ### How to install
-```sudo apt update && sudo apt install git apache2 php libapache2-mod-php expect geoip-bin build-essentials gcc```
+```sudo apt update && sudo apt install git apache2 php libapache2-mod-php expect geoip-bin build-essential gcc```
 	
 Edit the User and Group to the user/group (CURRENT_USERNAME)
 ```
